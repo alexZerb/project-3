@@ -56,3 +56,34 @@ activityFieldset.addEventListener('change', (e) => {
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     }
 });
+
+const payment = document.querySelector('#payment');
+const divCreditCard = document.querySelector('#credit-card');
+const divPaypal = document.querySelector('#paypal');
+const divBitcoin = document.querySelector('#bitcoin');
+
+divPaypal.style.display = 'none';
+divBitcoin.style.display = 'none';
+
+payment.children[1].setAttribute('selected', true);
+
+payment.addEventListener('change', (e) => {
+    if(e.target.value === 'credit-card') {
+        divCreditCard.style.display = 'block';
+        divPaypal.style.display = 'none';
+        divBitcoin.style.display = 'none';
+    } else if (e.target.value === 'paypal') {
+        divCreditCard.style.display = 'none';
+        divPaypal.style.display = 'block';
+        divBitcoin.style.display = 'none';
+    } else if (e.target.value === 'bitcoin'){
+        divCreditCard.style.display = 'none';
+        divPaypal.style.display = 'none';
+        divBitcoin.style.display = 'block';
+    }
+}); 
+
+console.log(payment);
+console.log(divCreditCard);
+console.log(divPaypal);
+console.log(divBitcoin);
