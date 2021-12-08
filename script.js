@@ -13,3 +13,28 @@ jobRoleInput.addEventListener('change', (e) => {
         otherJobInput.style.display = 'none';
     }      
 });
+
+const selectDesign = document.querySelector('#design');
+const selectColor = document.querySelector('#color');
+const colorOption = selectColor.children;
+
+selectColor.disabled = true;
+
+selectDesign.addEventListener('change', (e) => {
+    selectColor.disabled = false;
+    for(let i = 0; i < colorOption.length; i++){
+      const targetValue = e.target.value;
+      const dataTheme = colorOption[i].getAttribute('data-theme');    
+        if(targetValue === dataTheme) {
+            colorOption[i].hidden = false;
+            colorOption[i].setAttribute('selected', true);
+            
+        } else {
+            colorOption[i].hidden = true;
+            colorOption[i].removeAttribute('selected');
+        }
+        
+    }
+
+});
+
