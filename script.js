@@ -1,6 +1,7 @@
-const focus = document.querySelector('#name');
-focus.focus();
-
+// Focus on Name section at beginning
+const fieldName = document.querySelector('#name');
+fieldName.focus();
+// Job Role Section
 const jobRoleInput = document.querySelector('#title');
 const otherJobInput = document.querySelector('#other-job-role');
 
@@ -13,7 +14,7 @@ jobRoleInput.addEventListener('change', (e) => {
         otherJobInput.style.display = 'none';
     }      
 });
-
+// T-Shirt Information Section
 const selectDesign = document.querySelector('#design');
 const selectColor = document.querySelector('#color');
 const colorOption = selectColor.children;
@@ -37,7 +38,7 @@ selectDesign.addEventListener('change', (e) => {
     }
 
 });
-
+// Register for Activities Section
 const activityFieldset = document.querySelector('#activities');
 const finalPriceField = document.querySelector('#activities-cost');
 
@@ -56,7 +57,7 @@ activityFieldset.addEventListener('change', (e) => {
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     }
 });
-
+// Payment info section
 const payment = document.querySelector('#payment');
 const divCreditCard = document.querySelector('#credit-card');
 const divPaypal = document.querySelector('#paypal');
@@ -83,7 +84,8 @@ payment.addEventListener('change', (e) => {
     }
 }); 
 
-console.log(payment);
-console.log(divCreditCard);
-console.log(divPaypal);
-console.log(divBitcoin);
+const emailElement 
+const cardNumberField
+const zipcodeField
+const cvvField = 
+const form = document.querySelector('form');
