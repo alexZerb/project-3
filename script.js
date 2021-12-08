@@ -38,3 +38,21 @@ selectDesign.addEventListener('change', (e) => {
 
 });
 
+const activityFieldset = document.querySelector('#activities');
+const finalPriceField = document.querySelector('#activities-cost');
+
+let totalCost = 0; 
+
+activityFieldset.addEventListener('change', (e) => {
+    dataCost = e.target.getAttribute('data-cost');
+    if(e.target.checked === true) {
+        totalCost += (+dataCost);
+        console.log('true');
+        console.log(totalCost);
+        finalPriceField.innerHTML = `Total: $${totalCost}.00`;
+    } else {
+        totalCost -= (+dataCost);
+        console.log('false');
+        finalPriceField.innerHTML = `Total: $${totalCost}.00`;
+    }
+});
