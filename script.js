@@ -48,12 +48,9 @@ activityFieldset.addEventListener('change', (e) => {
     dataCost = e.target.getAttribute('data-cost');
     if(e.target.checked === true) {
         totalCost += (+dataCost);
-        console.log('true');
-        console.log(totalCost);
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     } else {
         totalCost -= (+dataCost);
-        console.log('false');
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     }
 });
@@ -100,7 +97,7 @@ form.addEventListener('submit', (e) => {
     const ccIsValid = /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(+ccNumber);
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
     const zipIsValid = /^\d{5}$/.test(+userZip);
-    const cvvIsValid = /^\d{3}$/.test(+cvv);
+    const cvvIsValid = /^\d{3}$/.test(+userCVV);
 
     if (nameIsValid === true) {
         nameField.style.borderColor = 'green';
@@ -139,5 +136,5 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-const checkboxEvent = document.querySelector('#activities-box'); 
+const checkboxEvent = document.querySelectorAll("input[type='checkbox']"); 
 console.log(checkboxEvent);
