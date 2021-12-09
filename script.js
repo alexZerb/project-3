@@ -110,6 +110,8 @@ form.addEventListener('submit', (e) => {
         cardNumber.style.borderColor = 'green';
     } else {
         e.preventDefault();
+        cardNumber.parentElement.add('not-valid');
+        cardNumber.
         alert('Please enter 13-16 numbers in Credit Card field');
         cardNumber.style.borderColor = 'firebrick';
     } 
@@ -137,4 +139,26 @@ form.addEventListener('submit', (e) => {
 });
 
 const checkboxEvent = document.querySelectorAll("input[type='checkbox']"); 
+
 console.log(checkboxEvent);
+
+for(let i = 0; i < checkboxEvent.length; i++) {
+    checkboxEvent[i].addEventListener('focus', (e) =>{
+        e.target.parentElement.classList.add('focus');
+    })
+    checkboxEvent[i].addEventListener('blur', (e) => {
+        e.target.parentElement.classList.remove('focus');
+    })
+}
+
+function validForm (element) {
+    element.parentElement.classList.add('valid');
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+}
+
+function invalidForm (element) {
+    element.parentElement.classList.add('not-valid');
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'block';
+}
