@@ -1,6 +1,6 @@
 // Focus on Name section at beginning
-const fieldName = document.querySelector('#name');
-fieldName.focus();
+const nameField = document.querySelector('#name');
+nameField.focus();
 // Job Role Section
 const jobRoleInput = document.querySelector('#title');
 const otherJobInput = document.querySelector('#other-job-role');
@@ -84,8 +84,60 @@ payment.addEventListener('change', (e) => {
     }
 }); 
 
-const emailElement 
-const cardNumberField
-const zipcodeField
-const cvvField = 
+const email = document.querySelector('#email');
+const cardNumber = document.querySelector('#cc-num');
+const zipcode = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
 const form = document.querySelector('form');
+
+form.addEventListener('submit', (e) => {
+    const username = nameField.value;
+    const emailAddress = email.value;
+    const ccNumber = cardNumber.value;
+    const userZip = zipcode.value;
+    const userCVV = cvv.value;
+    const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(username);
+    const ccIsValid = /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(+ccNumber);
+    const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
+    const zipIsValid = /^\d{5}$/.test(+userZip);
+    const cvvIsValid = /^\d{3}$/.test(+cvv);
+
+    if (nameIsValid === true) {
+        nameField.style.borderColor = 'green';
+    } else {
+        e.preventDefault();
+        alert('Please enter your Name in the name field (no numbers or special characters)');
+        nameField.style.borderColor = 'firebrick';
+    } 
+    if (ccIsValid === true) {
+        cardNumber.style.borderColor = 'green';
+    } else {
+        e.preventDefault();
+        alert('Please enter 13-16 numbers in Credit Card field');
+        cardNumber.style.borderColor = 'firebrick';
+    } 
+    if (emailIsValid === true) {
+        email.style.borderColor = 'green';
+    } else {
+        e.preventDefault();
+        alert('Please enter a valid Email Address');
+        email.style.borderColor = 'firebrick';
+    }
+    if (zipIsValid === true) {
+        zipcode.style.borderColor = 'green';
+    } else{
+        e.preventDefault();
+        alert('Please enter a valid 5 digit zip code')
+        zipcode.style.borderColor = 'firebrick';
+    }
+    if (cvvIsValid === true) {
+        cvv.style.borderColor = 'green';
+    } else {
+        e.preventDefault();
+        alert('Please enter a Valid 3 digit CVV number');
+        cvv.style.borderColor = 'firebrick';
+    }
+});
+
+const checkboxEvent = document.querySelector('#activities-box'); 
+console.log(checkboxEvent);
