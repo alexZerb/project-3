@@ -1,10 +1,37 @@
-// Focus on Name section at beginning
+/*
+
+Constant & Regular Expressions
+
+*/
 const nameField = document.querySelector('#name');
-nameField.focus();
-// Job Role Section
 const jobRoleInput = document.querySelector('#title');
 const otherJobInput = document.querySelector('#other-job-role');
-
+const selectDesign = document.querySelector('#design');
+const selectColor = document.querySelector('#color');
+const colorOption = selectColor.children;
+const activityFieldset = document.querySelector('#activities');
+const finalPriceField = document.querySelector('#activities-cost');
+const payment = document.querySelector('#payment');
+const divCreditCard = document.querySelector('#credit-card');
+const divPaypal = document.querySelector('#paypal');
+const divBitcoin = document.querySelector('#bitcoin');
+const email = document.querySelector('#email');
+const cardNumber = document.querySelector('#cc-num');
+const zipcode = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+const form = document.querySelector('form');
+const username = nameField.value;
+const emailAddress = email.value;
+const ccNumber = cardNumber.value;
+const userZip = zipcode.value;
+const userCVV = cvv.value;
+const cbEvent = document.querySelectorAll("input[type='checkbox']");
+let totalCost = 0;
+//focus on name, hide otherJob, bitcoin, paypal, disable color field
+nameField.focus();
+selectColor.disabled = true;
+divPaypal.style.display = 'none';
+divBitcoin.style.display = 'none';
 otherJobInput.style.display = 'none';
 
 jobRoleInput.addEventListener('change', (e) => {
@@ -14,12 +41,6 @@ jobRoleInput.addEventListener('change', (e) => {
         otherJobInput.style.display = 'none';
     }      
 });
-// T-Shirt Information Section
-const selectDesign = document.querySelector('#design');
-const selectColor = document.querySelector('#color');
-const colorOption = selectColor.children;
-
-selectColor.disabled = true;
 
 selectDesign.addEventListener('change', (e) => {
     selectColor.disabled = false;
@@ -33,17 +54,10 @@ selectDesign.addEventListener('change', (e) => {
         } else {
             colorOption[i].hidden = true;
             colorOption[i].removeAttribute('selected');
-        }
-        
+        }   
     }
-
 });
 // Register for Activities Section
-const activityFieldset = document.querySelector('#activities');
-const finalPriceField = document.querySelector('#activities-cost');
-
-let totalCost = 0; 
-
 activityFieldset.addEventListener('change', (e) => {
     dataCost = e.target.getAttribute('data-cost');
     if(e.target.checked === true) {
@@ -55,16 +69,8 @@ activityFieldset.addEventListener('change', (e) => {
     }
 });
 // Payment info section
-const payment = document.querySelector('#payment');
-const divCreditCard = document.querySelector('#credit-card');
-const divPaypal = document.querySelector('#paypal');
-const divBitcoin = document.querySelector('#bitcoin');
-
-divPaypal.style.display = 'none';
-divBitcoin.style.display = 'none';
-
 payment.children[1].setAttribute('selected', true);
-
+// Paypal, Bitcoin display additional information when selected
 payment.addEventListener('change', (e) => {
     if(e.target.value === 'credit-card') {
         divCreditCard.style.display = 'block';
@@ -80,85 +86,63 @@ payment.addEventListener('change', (e) => {
         divBitcoin.style.display = 'block';
     }
 }); 
-
-const email = document.querySelector('#email');
-const cardNumber = document.querySelector('#cc-num');
-const zipcode = document.querySelector('#zip');
-const cvv = document.querySelector('#cvv');
-const form = document.querySelector('form');
-
+// Required fields are checked for accuracy 
 form.addEventListener('submit', (e) => {
-    const username = nameField.value;
-    const emailAddress = email.value;
-    const ccNumber = cardNumber.value;
-    const userZip = zipcode.value;
-    const userCVV = cvv.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(username);
     const ccIsValid = /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(+ccNumber);
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
     const zipIsValid = /^\d{5}$/.test(+userZip);
     const cvvIsValid = /^\d{3}$/.test(+userCVV);
-
+// adds classList information, styles, depending on Valid/Invalid
     if (nameIsValid === true) {
-        nameField.style.borderColor = 'green';
+        validForm(nameField);
     } else {
         e.preventDefault();
-        alert('Please enter your Name in the name field (no numbers or special characters)');
-        nameField.style.borderColor = 'firebrick';
+        invalidForm(nameField);
     } 
     if (ccIsValid === true) {
-        cardNumber.style.borderColor = 'green';
+        validForm(cardNumber);
     } else {
         e.preventDefault();
-        cardNumber.parentElement.add('not-valid');
-        cardNumber.
-        alert('Please enter 13-16 numbers in Credit Card field');
-        cardNumber.style.borderColor = 'firebrick';
+        invalidForm(cardNumber);
     } 
     if (emailIsValid === true) {
-        email.style.borderColor = 'green';
+        validForm(email)
     } else {
         e.preventDefault();
-        alert('Please enter a valid Email Address');
-        email.style.borderColor = 'firebrick';
+        invalidForm(email);
     }
     if (zipIsValid === true) {
-        zipcode.style.borderColor = 'green';
     } else{
         e.preventDefault();
-        alert('Please enter a valid 5 digit zip code')
-        zipcode.style.borderColor = 'firebrick';
+        invalidForm(zipcode);
     }
-    if (cvvIsValid === true) {
-        cvv.style.borderColor = 'green';
+    if (cvvIsValid === true){
+        validForm(cvv);
     } else {
-        e.preventDefault();
-        alert('Please enter a Valid 3 digit CVV number');
-        cvv.style.borderColor = 'firebrick';
+        e.preventDefault
+        invalidForm(cvv);
     }
-});
-
-const checkboxEvent = document.querySelectorAll("input[type='checkbox']"); 
-
-console.log(checkboxEvent);
-
-for(let i = 0; i < checkboxEvent.length; i++) {
-    checkboxEvent[i].addEventListener('focus', (e) =>{
+}); 
+// allows tabination through activities check boxes
+for(let i = 0; i < cbEvent.length; i++) {
+    cbEvent[i].addEventListener('focus', (e) =>{
         e.target.parentElement.classList.add('focus');
     })
-    checkboxEvent[i].addEventListener('blur', (e) => {
+    cbEvent[i].addEventListener('blur', (e) => {
         e.target.parentElement.classList.remove('focus');
     })
 }
-
+//functions to clean up conditionals
 function validForm (element) {
     element.parentElement.classList.add('valid');
     element.parentElement.classList.remove('not-valid');
     element.parentElement.lastElementChild.style.display = 'none';
+    element.style.borderColor = 'green';
 }
-
 function invalidForm (element) {
     element.parentElement.classList.add('not-valid');
     element.parentElement.classList.remove('valid');
     element.parentElement.lastElementChild.style.display = 'block';
+    element.style.borderColor = 'firebrick';
 }
