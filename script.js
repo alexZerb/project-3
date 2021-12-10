@@ -58,11 +58,24 @@ activityFieldset.addEventListener('change', (e) => {
     if(e.target.checked === true) {
         totalCost += (+dataCost);
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
+ 
     } else {
         totalCost -= (+dataCost);
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     }
 });
+// Allows tabination through activites checkboxes
+for(let i = 0; i < checkboxEvent.length; i++) {
+    checkboxEvent[i].addEventListener('focus', (e) =>{
+        e.target.parentElement.classList.add('focus');
+    })
+    checkboxEvent[i].addEventListener('blur', (e) => {
+        e.target.parentElement.classList.remove('focus');
+    })
+}
+//conditional statementx to disable events that happen at same time
+console.log(checkboxEvent[1]);
+console.log(checkboxEvent[3]);
 // Payment info displays additional information for bitcoin/paypal
 payment.addEventListener('change', (e) => {
     if(e.target.value === 'credit-card') {
@@ -123,16 +136,6 @@ form.addEventListener('submit', (e) => {
         invalidForm(cvv);
     }
 }); 
-// Allows tabination through activites checkboxes
-for(let i = 0; i < checkboxEvent.length; i++) {
-    checkboxEvent[i].addEventListener('focus', (e) =>{
-        e.target.parentElement.classList.add('focus');
-    })
-    checkboxEvent[i].addEventListener('blur', (e) => {
-        e.target.parentElement.classList.remove('focus');
-    })
-}
-
 function validForm (element) {
     element.parentElement.classList.add('valid');
     element.parentElement.classList.remove('not-valid');
@@ -144,3 +147,28 @@ function invalidForm (element) {
     element.parentElement.classList.remove('valid');
     element.parentElement.lastElementChild.style.display = 'block';
 }
+
+activityFieldset.addEventListener('click', (e) => {
+    for(let i = 0; i < checkboxEvent.length; i++){
+        if (checkboxEvent[1].checked === true){
+            checkboxEvent[3].disabled = true;
+        } else {
+            checkboxEvent[3].removeAttribute('disabled');
+        }
+        if (checkboxEvent[3].checked === true){
+            checkboxEvent[1].disabled = true;
+        } else {
+            checkboxEvent[1].removeAttribute('disabled');
+        }
+        if (checkboxEvent[2].checked === true){
+            checkboxEvent[4].disabled = true;
+        } else {
+            checkboxEvent[4].removeAttribute('disabled');
+        }
+        if (checkboxEvent[4].checked === true){
+            checkboxEvent[2].disabled = true;
+        } else {
+            checkboxEvent[2].removeAttribute('disabled');
+        }
+    }
+});
