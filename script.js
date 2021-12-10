@@ -129,10 +129,10 @@ form.addEventListener('submit', (e) => {
     const userZip = zipcode.value;
     const userCVV = cvv.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(username);
-    const ccIsValid = /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(+ccNumber);
+    const ccIsValid = /^\d{13}\d?\d?\d?$/.test(ccNumber);
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
-    const zipIsValid = /^\[0-9]{5}$/.test(+userZip);
-    const cvvIsValid = /^[0-9]{3}$/.test(+userCVV);
+    const zipIsValid = /^\d{5}$/.test(userZip);
+    const cvvIsValid = /^\d{3}$/.test(userCVV);
 
     if (nameIsValid === true) {
         validForm(nameField);
@@ -177,3 +177,4 @@ function invalidForm (element) {
     element.parentElement.classList.remove('valid');
     element.parentElement.lastElementChild.style.display = 'block';
 }
+
