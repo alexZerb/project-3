@@ -178,10 +178,3 @@ form.addEventListener('submit', (e) => {
     }
 }); 
 }
-// live event handler for Credit card number
-cardNumber.addEventListener('keyup', (e) => {
-    if (e.target.value !== /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/ ) {
-        console.log('we have a problem');
-    }
-
-});
