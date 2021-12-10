@@ -18,6 +18,17 @@ const form = document.querySelector('form');
 const checkboxEvent = document.querySelectorAll("input[type='checkbox']");
 const colorOption = selectColor.children;
 let totalCost = 0; 
+//functions to add valid/not valid class in html
+function validForm (element) {
+    element.parentElement.classList.add('valid');
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+}
+
+function invalidForm (element) {
+    element.parentElement.classList.add('not-valid');
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'block';
 // Focus on name field/disable color options until design is selected
 nameField.focus();
 selectColor.disabled = true;
@@ -47,10 +58,8 @@ selectDesign.addEventListener('change', (e) => {
         } else {
             colorOption[i].hidden = true;
             colorOption[i].removeAttribute('selected');
-        }
-        
+        }   
     }
-
 });
 // As checkboxes are selected total price is updated to show present cost
 activityFieldset.addEventListener('change', (e) => {
@@ -58,7 +67,6 @@ activityFieldset.addEventListener('change', (e) => {
     if(e.target.checked === true) {
         totalCost += (+dataCost);
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
- 
     } else {
         totalCost -= (+dataCost);
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
@@ -73,9 +81,41 @@ for(let i = 0; i < checkboxEvent.length; i++) {
         e.target.parentElement.classList.remove('focus');
     })
 }
-//conditional statementx to disable events that happen at same time
-console.log(checkboxEvent[1]);
-console.log(checkboxEvent[3]);
+// radio buttons are disabled for conflicting time slots EXTRA CREDIT
+activityFieldset.addEventListener('click', (e) => {
+    for(let i = 0; i < checkboxEvent.length; i++){
+        if (checkboxEvent[1].checked === true){
+            checkboxEvent[3].disabled = true;
+            checkboxEvent[3].classList.add('disabled');
+        } else {
+            checkboxEvent[3].removeAttribute('disabled');
+            checkboxEvent[3].classList.remove('disabled');
+        }
+        if (checkboxEvent[3].checked === true){
+            checkboxEvent[1].disabled = true;
+            checkboxEvent[1].classList.add('disabled');
+
+        } else {
+            checkboxEvent[1].removeAttribute('disabled');
+            checkboxEvent[1].classList.remove('disabled');
+        }
+        if (checkboxEvent[2].checked === true){
+            checkboxEvent[4].disabled = true;
+            checkboxEvent[4].classList.add('disabled');
+
+        } else {
+            checkboxEvent[4].removeAttribute('disabled');
+            checkboxEvent[4].classList.remove('disabled');
+        }
+        if (checkboxEvent[4].checked === true){
+            checkboxEvent[2].disabled = true;
+            checkboxEvent[2].classList.add('disabled')
+        } else {
+            checkboxEvent[2].removeAttribute('disabled');
+            checkboxEvent[2].classList.remove('disabled');
+        }
+    }
+});
 // Payment info displays additional information for bitcoin/paypal
 payment.addEventListener('change', (e) => {
     if(e.target.value === 'credit-card') {
@@ -94,6 +134,7 @@ payment.addEventListener('change', (e) => {
 }); 
 // Form validation event listener
 form.addEventListener('submit', (e) => {
+    preventDefault();
     const username = nameField.value;
     const emailAddress = email.value;
     const ccNumber = cardNumber.value;
@@ -136,39 +177,11 @@ form.addEventListener('submit', (e) => {
         invalidForm(cvv);
     }
 }); 
-function validForm (element) {
-    element.parentElement.classList.add('valid');
-    element.parentElement.classList.remove('not-valid');
-    element.parentElement.lastElementChild.style.display = 'none';
 }
-
-function invalidForm (element) {
-    element.parentElement.classList.add('not-valid');
-    element.parentElement.classList.remove('valid');
-    element.parentElement.lastElementChild.style.display = 'block';
-}
-
-activityFieldset.addEventListener('click', (e) => {
-    for(let i = 0; i < checkboxEvent.length; i++){
-        if (checkboxEvent[1].checked === true){
-            checkboxEvent[3].disabled = true;
-        } else {
-            checkboxEvent[3].removeAttribute('disabled');
-        }
-        if (checkboxEvent[3].checked === true){
-            checkboxEvent[1].disabled = true;
-        } else {
-            checkboxEvent[1].removeAttribute('disabled');
-        }
-        if (checkboxEvent[2].checked === true){
-            checkboxEvent[4].disabled = true;
-        } else {
-            checkboxEvent[4].removeAttribute('disabled');
-        }
-        if (checkboxEvent[4].checked === true){
-            checkboxEvent[2].disabled = true;
-        } else {
-            checkboxEvent[2].removeAttribute('disabled');
-        }
+// live event handler for Credit card number
+cardNumber.addEventListener('keyup', (e) => {
+    if (e.target.value !== /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/ ) {
+        console.log('we have a problem');
     }
+
 });
