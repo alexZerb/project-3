@@ -18,17 +18,6 @@ const form = document.querySelector('form');
 const checkboxEvent = document.querySelectorAll("input[type='checkbox']");
 const colorOption = selectColor.children;
 let totalCost = 0; 
-//functions to add valid/not valid class in html
-function validForm (element) {
-    element.parentElement.classList.add('valid');
-    element.parentElement.classList.remove('not-valid');
-    element.parentElement.lastElementChild.style.display = 'none';
-}
-
-function invalidForm (element) {
-    element.parentElement.classList.add('not-valid');
-    element.parentElement.classList.remove('valid');
-    element.parentElement.lastElementChild.style.display = 'block';
 // Focus on name field/disable color options until design is selected
 nameField.focus();
 selectColor.disabled = true;
@@ -134,7 +123,6 @@ payment.addEventListener('change', (e) => {
 }); 
 // Form validation event listener
 form.addEventListener('submit', (e) => {
-    preventDefault();
     const username = nameField.value;
     const emailAddress = email.value;
     const ccNumber = cardNumber.value;
@@ -143,8 +131,8 @@ form.addEventListener('submit', (e) => {
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(username);
     const ccIsValid = /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(+ccNumber);
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
-    const zipIsValid = /^\d{5}$/.test(+userZip);
-    const cvvIsValid = /^\d{3}$/.test(+userCVV);
+    const zipIsValid = /^\[0-9]{5}$/.test(+userZip);
+    const cvvIsValid = /^[0-9]{3}$/.test(+userCVV);
 
     if (nameIsValid === true) {
         validForm(nameField);
@@ -177,4 +165,15 @@ form.addEventListener('submit', (e) => {
         invalidForm(cvv);
     }
 }); 
+
+function validForm (element) {
+    element.parentElement.classList.add('valid');
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+}
+
+function invalidForm (element) {
+    element.parentElement.classList.add('not-valid');
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'block';
 }
