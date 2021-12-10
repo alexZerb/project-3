@@ -70,7 +70,7 @@ for(let i = 0; i < checkboxEvent.length; i++) {
         e.target.parentElement.classList.remove('focus');
     })
 }
-// radio buttons are disabled for conflicting time slots EXTRA CREDIT
+// radio buttons are disabled for conflicting time slots *EXTRA CREDIT*
 activityFieldset.addEventListener('click', (e) => {
     for(let i = 0; i < checkboxEvent.length; i++){
         if (checkboxEvent[1].checked === true){
@@ -121,6 +121,17 @@ payment.addEventListener('change', (e) => {
         divBitcoin.style.display = 'block';
     }
 }); 
+// Checks email with validator each time user types in field *EXTRA CREDIT*
+email.addEventListener('keyup', (e) => {
+    const liveEmailValidator = /^[^@]+@[^@.]+\.[a-zA-Z]{3}$/.test(e.target.value);
+    if (liveEmailValidator === true) {
+        console.log('true');
+        validForm(email);
+    } else {
+        console.log('false');
+        invalidForm(email);
+    }
+})
 // Form validation event listener
 form.addEventListener('submit', (e) => {
     const username = nameField.value;
@@ -130,21 +141,15 @@ form.addEventListener('submit', (e) => {
     const userCVV = cvv.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(username);
     const ccIsValid = /^\d{13}\d?\d?\d?$/.test(ccNumber);
-    const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/.test(emailAddress);
+    const emailIsValid = /^[^@]+@[^@.]+\.[a-zA-Z]+$/.test(emailAddress);
     const zipIsValid = /^\d{5}$/.test(userZip);
     const cvvIsValid = /^\d{3}$/.test(userCVV);
-
+// Form will not submit unless all values are filled in correctly
     if (nameIsValid === true) {
         validForm(nameField);
     } else {
         e.preventDefault();
         invalidForm(nameField);
-    } 
-    if (ccIsValid === true) {
-        validForm(cardNumber);
-    } else {
-        e.preventDefault();
-        invalidForm(cardNumber);
     } 
     if (emailIsValid === true) {
         validForm(email);
@@ -152,29 +157,42 @@ form.addEventListener('submit', (e) => {
         e.preventDefault();
         invalidForm(email);
     }
-    if (zipIsValid === true) {
-        validForm(zipcode);
-    } else{
-        e.preventDefault();
-        invalidForm(zipcode);
-    }
-    if (cvvIsValid === true) {
-        validForm(cvv);
-    } else {
-        e.preventDefault();
-        invalidForm(cvv);
+// If creditcard is chosen, checks to verify correct format, submits otherwise
+    if(payment.value === 'credit-card') {
+        if (ccIsValid === true) {
+            validForm(cardNumber);
+        }  else {
+            e.preventDefault();
+            invalidForm(cardNumber);
+// If card digits are not correct a conditional error is displayed. *EXTRA CREDIT*
+            if (ccNumber.length < 13) {
+                alert('The card number you entered is less than 13 digits.');
+            } else if (ccNumber.length > 14) {
+                alert('The card number you entered is more than 16 digits.');
+            }
+        } 
+        if (zipIsValid === true) {
+            validForm(zipcode);
+        } else{
+            e.preventDefault();
+            invalidForm(zipcode);
+        }
+        if (cvvIsValid === true) {
+            validForm(cvv);
+        } else {
+            e.preventDefault();
+            invalidForm(cvv);
+        }
     }
 }); 
-
+// Functions to add appropriate styles when complete/incomplete
 function validForm (element) {
     element.parentElement.classList.add('valid');
     element.parentElement.classList.remove('not-valid');
     element.parentElement.lastElementChild.style.display = 'none';
 }
-
 function invalidForm (element) {
     element.parentElement.classList.add('not-valid');
     element.parentElement.classList.remove('valid');
     element.parentElement.lastElementChild.style.display = 'block';
 }
-
