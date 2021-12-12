@@ -83,6 +83,7 @@ activityFieldset.addEventListener('click', (e) => {
         if (checkboxEvent[3].checked === true){
             checkboxEvent[1].disabled = true;
             checkboxEvent[1].classList.add('disabled');
+
         } else {
             checkboxEvent[1].removeAttribute('disabled');
             checkboxEvent[1].classList.remove('disabled');
@@ -90,6 +91,7 @@ activityFieldset.addEventListener('click', (e) => {
         if (checkboxEvent[2].checked === true){
             checkboxEvent[4].disabled = true;
             checkboxEvent[4].classList.add('disabled');
+
         } else {
             checkboxEvent[4].removeAttribute('disabled');
             checkboxEvent[4].classList.remove('disabled');
