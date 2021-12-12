@@ -17,7 +17,9 @@ const cvv = document.querySelector('#cvv');
 const form = document.querySelector('form');
 const checkboxEvent = document.querySelectorAll("input[type='checkbox']");
 const colorOption = selectColor.children;
+const cardError = document.querySelector('#cc-hint');
 let totalCost = 0; 
+console.log(cardError);
 // Focus on name field/disable color options until design is selected
 nameField.focus();
 selectColor.disabled = true;
@@ -166,9 +168,9 @@ form.addEventListener('submit', (e) => {
             invalidForm(cardNumber);
 // If card digits are not correct a conditional error is displayed. *EXTRA CREDIT*
             if (ccNumber.length < 13) {
-                alert('The card number you entered is less than 13 digits.');
+                cardError.innerHTML += '. The card number you entered is less than 13 digits.';
             } else if (ccNumber.length > 14) {
-                alert('The card number you entered is more than 16 digits.');
+                cardError.innerHTML += '. The card number you entered is more than 16 digits.';
             }
         } 
         if (zipIsValid === true) {
