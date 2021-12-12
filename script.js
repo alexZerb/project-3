@@ -19,7 +19,6 @@ const checkboxEvent = document.querySelectorAll("input[type='checkbox']");
 const colorOption = selectColor.children;
 const cardError = document.querySelector('#cc-hint');
 let totalCost = 0; 
-console.log(cardError);
 // Focus on name field/disable color options until design is selected
 nameField.focus();
 selectColor.disabled = true;
