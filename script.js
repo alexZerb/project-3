@@ -4,7 +4,7 @@ const jobRoleInput = document.querySelector('#title');
 const otherJobInput = document.querySelector('#other-job-role');
 const selectDesign = document.querySelector('#design');
 const selectColor = document.querySelector('#color');
-const activityFieldset = document.querySelector('#activities');
+const activities = document.querySelector('#activities-box');
 const finalPriceField = document.querySelector('#activities-cost');
 const payment = document.querySelector('#payment');
 const divCreditCard = document.querySelector('#credit-card');
@@ -15,10 +15,12 @@ const cardNumber = document.querySelector('#cc-num');
 const zipcode = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
 const form = document.querySelector('form');
-const checkboxEvent = document.querySelectorAll("input[type='checkbox']");
+const checkbox = activities.querySelectorAll("input[type='checkbox']");
 const colorOption = selectColor.children;
 const cardError = document.querySelector('#cc-hint');
 let totalCost = 0; 
+let total = 0;
+
 // Focus on name field/disable color options until design is selected
 nameField.focus();
 selectColor.disabled = true;
@@ -51,8 +53,8 @@ selectDesign.addEventListener('change', (e) => {
         }   
     }
 });
-// As checkboxes are selected total price is updated to show present cost
-activityFieldset.addEventListener('change', (e) => {
+// As checkbox are selected total price is updated to show present cost
+activities.addEventListener('change', (e) => {
     dataCost = e.target.getAttribute('data-cost');
     if(e.target.checked === true) {
         totalCost += (+dataCost);
@@ -62,47 +64,47 @@ activityFieldset.addEventListener('change', (e) => {
         finalPriceField.innerHTML = `Total: $${totalCost}.00`;
     }
 });
-// Allows tabination through activites checkboxes
-for(let i = 0; i < checkboxEvent.length; i++) {
-    checkboxEvent[i].addEventListener('focus', (e) =>{
+// Allows tabination through activites checkbox
+for(let i = 0; i < checkbox.length; i++) {
+    checkbox[i].addEventListener('focus', (e) =>{
         e.target.parentElement.classList.add('focus');
     })
-    checkboxEvent[i].addEventListener('blur', (e) => {
+    checkbox[i].addEventListener('blur', (e) => {
         e.target.parentElement.classList.remove('focus');
     })
 }
 // radio buttons are disabled for conflicting time slots *EXTRA CREDIT*
-activityFieldset.addEventListener('click', (e) => {
-    for(let i = 0; i < checkboxEvent.length; i++){
-        if (checkboxEvent[1].checked === true){
-            checkboxEvent[3].disabled = true;
-            checkboxEvent[3].classList.add('disabled');
+activities.addEventListener('click', (e) => {
+    for(let i = 0; i < checkbox.length; i++){
+        if (checkbox[1].checked === true){
+            checkbox[3].disabled = true;
+            checkbox[3].classList.add('disabled');
         } else {
-            checkboxEvent[3].removeAttribute('disabled');
-            checkboxEvent[3].classList.remove('disabled');
+            checkbox[3].removeAttribute('disabled');
+            checkbox[3].classList.remove('disabled');
         }
-        if (checkboxEvent[3].checked === true){
-            checkboxEvent[1].disabled = true;
-            checkboxEvent[1].classList.add('disabled');
+        if (checkbox[3].checked === true){
+            checkbox[1].disabled = true;
+            checkbox[1].classList.add('disabled');
 
         } else {
-            checkboxEvent[1].removeAttribute('disabled');
-            checkboxEvent[1].classList.remove('disabled');
+            checkbox[1].removeAttribute('disabled');
+            checkbox[1].classList.remove('disabled');
         }
-        if (checkboxEvent[2].checked === true){
-            checkboxEvent[4].disabled = true;
-            checkboxEvent[4].classList.add('disabled');
+        if (checkbox[2].checked === true){
+            checkbox[4].disabled = true;
+            checkbox[4].classList.add('disabled');
 
         } else {
-            checkboxEvent[4].removeAttribute('disabled');
-            checkboxEvent[4].classList.remove('disabled');
+            checkbox[4].removeAttribute('disabled');
+            checkbox[4].classList.remove('disabled');
         }
-        if (checkboxEvent[4].checked === true){
-            checkboxEvent[2].disabled = true;
-            checkboxEvent[2].classList.add('disabled')
+        if (checkbox[4].checked === true){
+            checkbox[2].disabled = true;
+            checkbox[2].classList.add('disabled')
         } else {
-            checkboxEvent[2].removeAttribute('disabled');
-            checkboxEvent[2].classList.remove('disabled');
+            checkbox[2].removeAttribute('disabled');
+            checkbox[2].classList.remove('disabled');
         }
     }
 });
@@ -126,10 +128,8 @@ payment.addEventListener('change', (e) => {
 email.addEventListener('keyup', (e) => {
     const liveEmailValidator = /^[^@]+@[^@.]+\.[a-zA-Z]{3}$/.test(e.target.value);
     if (liveEmailValidator === true) {
-        console.log('true');
         validForm(email);
     } else {
-        console.log('false');
         invalidForm(email);
     }
 })
@@ -146,7 +146,8 @@ form.addEventListener('submit', (e) => {
     const zipIsValid = /^\d{5}$/.test(userZip);
     const cvvIsValid = /^\d{3}$/.test(userCVV);
 // Form will not submit unless all values are filled in correctly
-    if (nameIsValid === true) {
+   
+if (nameIsValid === true) {
         validForm(nameField);
     } else {
         e.preventDefault();
@@ -157,7 +158,8 @@ form.addEventListener('submit', (e) => {
     } else {
         e.preventDefault();
         invalidForm(email);
-    }
+    } 
+    if (!validActivity()){ e.preventDefault();}
 // If creditcard is chosen, checks to verify correct format, submits otherwise
     if(payment.value === 'credit-card') {
         if (ccIsValid === true) {
@@ -195,5 +197,15 @@ function validForm (element) {
 function invalidForm (element) {
     element.parentElement.classList.add('not-valid');
     element.parentElement.classList.remove('valid');
-    element.parentElement.lastElementChild.style.display = 'block';
+    element.parentElement.lastElementChild.style.display = 'inline';
+}
+// Checks if an activity is selected using totalCost variable
+function validActivity () {
+    if(totalCost > 0){
+        validForm(activities);
+        return true;
+    } else {
+    invalidForm(activities);
+        return false;
+    }
 }
